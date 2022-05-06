@@ -21,7 +21,36 @@ module.exports = {
         User.create(req.body)
         .then((data)=>res.json(data))
         .catch((err)=> res.status(500).json(err));
-    }
+    },
+    updateUser(req,res){
+        User.findOneAndUpdate(
+            { _id: req.params.userId },
+            { $set: req.body },
+            { runValidators: true, new: true }
+          )
+            .then((user) =>
+              !user
+                ? res.status(404).json({ message: 'No user with this id!' })
+                : res.json(user)
+            )
+            .catch((err) => {
+              console.log(err);
+              res.status(500).json(err);
+            }); 
+    },
+    deleteUser(req, res) {
+        User.findOneAndRemove({ _id: req.params.userId })
+          .then((user) =>
+            !user
+              ? res.status(404).json({ message: 'No user with this id!' })
+              : User.findOneAndUpdate(
+                  { users: req.params.userId },
+                  { $pull: { users: req.params.userId } },
+                  { new: true }
+                )
+          )
+          .catch((err) => res.status(500).json(err));
+      },
   };
   
   // GET a single user by its _id and populated thought and friend data
