@@ -3,6 +3,8 @@ const {
   getUsers,
   getSingleUser,
   createUser,
+  updateUser,
+  deleteUser,
 } = require("../../controllers/userController");
 const User = require("../models/User");
 
@@ -10,29 +12,6 @@ const User = require("../models/User");
 router.route("/").get(getUsers).post(createUser);
 
 // /api/users/:userId
-router.route("/:userId").get(getSingleUser);
+router.route("/:userId").get(getSingleUser).put(updateUser).delete(deleteUser);
 
 module.exports = router;
-
-// GET all users
-module.exports = {
-  getUsers(req, res) {
-    User.find()
-      .then((users) => res.json(users))
-      .catch((err) => res.status(500).json(err));
-  },
-};
-
-// GET a single user by its _id and populated thought and friend data
-
-// POST a new user:
-
-// // example data
-// {
-//   "username": "lernantino",
-//   "email": "lernantino@gmail.com"
-// }
-
-// PUT to update a user by its _id
-
-// DELETE to remove user by its _id
