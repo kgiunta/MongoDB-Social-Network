@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("./config/connection");
 // Require model
 const { Genre } = require("./models");
+app.use(require("./Routes"));
 
 const PORT = process.env.PORT || 3001;
 const app = express();
