@@ -6,7 +6,7 @@ var validateEmail = function (email) {
   return re.test(email);
 };
 
-const userSchema = new mongoose.Schema({
+const userSchema = new Schema({
   username: { type: String, unique: true, trim: true, required: true },
   email: {
     type: String,
@@ -23,6 +23,6 @@ const userSchema = new mongoose.Schema({
   friends: { type: Schema.Types.ObjectId, ref: "User" },
 });
 
-const User = ("User", userSchema);
+const User = model("User", userSchema);
 
 module.exports = User;
