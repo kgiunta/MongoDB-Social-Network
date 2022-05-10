@@ -70,6 +70,21 @@ module.exports = {
         res.status(400).json(err);
       });
   },
+  deleteFriend({ params }, res) {
+    User.findOneAndUpdate(
+      { _id: params.userId },
+      { $pull: { friends: params.friendId } },
+      { new: true }
+    )
+      .then((socialDB) => {
+        if (!socialDB) {
+          res.status(404).json({ message: "No user found with this id" });
+          return;
+        }
+        res.json(socialDB);
+      })
+      .catch((err) => res.status(400).json(err));
+  },
 };
 
 // GET a single user by its _id and populated thought and friend data
