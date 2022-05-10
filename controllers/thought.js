@@ -10,7 +10,6 @@ module.exports = {
   getSingleThought(req, res) {
     Thought.findOne({ _id: req.params.userId })
       .select("-__v")
-      // ????
       .populate("friends")
       .populate("thoughts")
       .then((results) => {

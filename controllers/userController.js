@@ -52,6 +52,24 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
+  addFriend({ params }, res) {
+    User.findOneAndUpdate(
+      { _id: params.userId },
+      { $addToSet: { friends: params.friendId } },
+      { new: true }
+    )
+      .select("-__v")
+      .then((socialDB) => {
+        if (!socialDB) {
+          res.status(404).json({ message: "No known users with this id!" });
+          return;
+        }
+        res.json(socialDB);
+      })
+      .catch((err) => {
+        res.status(400).json(err);
+      });
+  },
 };
 
 // GET a single user by its _id and populated thought and friend data

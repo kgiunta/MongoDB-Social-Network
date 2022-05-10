@@ -12,7 +12,7 @@ const {
 router.route("/").get(getThoughts).post(createThought);
 
 router
-  .route("/thought/:id")
+  .route("/:id")
   .get(getSingleThought)
   .put(updateThought)
   .delete(deleteThought);
