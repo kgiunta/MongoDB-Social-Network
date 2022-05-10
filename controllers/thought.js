@@ -8,10 +8,8 @@ module.exports = {
       .catch((err) => res.status(500).json(err));
   },
   getSingleThought(req, res) {
-    Thought.findOne({ _id: req.params.userId })
+    Thought.findOne({ _id: req.params.thoughtId })
       .select("-__v")
-      .populate("friends")
-      .populate("thoughts")
       .then((results) => {
         res.json(results);
       })
